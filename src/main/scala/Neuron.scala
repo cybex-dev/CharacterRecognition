@@ -17,6 +17,9 @@ class Neuron(learningRate: Double, accuracy: Double) {
   // Temp holder for output
   var output: Double = 0.0
 
+  // Holder for desired value, value either [0, 1]
+  var desiredValue: Double = 0.0
+
   // SSE
   var sumSquareError: Double = 0.0
 
@@ -37,9 +40,8 @@ class Neuron(learningRate: Double, accuracy: Double) {
 
   /**
     * Called with desired value which is used to update the weights using gradient decent
-    * @param desiredValue value either [0, 1]
     */
-  def updateWeights(desiredValue: Double) = {
+  def updateWeights() = {
 
     // Update all weights
     for((weight, index) <- listWeights.zipWithIndex) {
@@ -58,7 +60,7 @@ class Neuron(learningRate: Double, accuracy: Double) {
     *
     * @param singleInput
     */
-  def evaluate(singleInput: List[Double]) = {
+  def evaluate(singleInput: List[Double], desiredValue: Double) = {
 
     // Assign new inputs to temp holder for later usage
     inputs = singleInput
@@ -79,6 +81,9 @@ class Neuron(learningRate: Double, accuracy: Double) {
 
       // Activate sum
       sigmoid(sum)
+
+      // Add error to SSE
+      sumSquareError += Math.pow(desiredValue - output, 2)
     }
   }
 }
