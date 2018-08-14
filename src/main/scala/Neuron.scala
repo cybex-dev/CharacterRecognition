@@ -34,8 +34,8 @@ class Neuron(learningRate: Double, accuracy: Double) {
 
 
   private def sigmoid(sum: Double) = {
-    // Calculate neuron activation value and assign to output
-    output = 1 / (1 + Math.pow(Math.E, -1.0 * sum))
+    // Calculate neuron activation value
+    1 / (1 + Math.pow(Math.E, -1.0 * sum))
   }
 
   /**
@@ -71,7 +71,7 @@ class Neuron(learningRate: Double, accuracy: Double) {
       // Initialize sum to 0
       var sum: Double = 0.0
 
-      // Calculate weighted sum
+      // Calculate weighted 'sum'
       for ((input, index) <- singleInput.zipWithIndex) {
         sum += input * listWeights(index)
       }
@@ -79,11 +79,14 @@ class Neuron(learningRate: Double, accuracy: Double) {
       // Add bias
       sum += bias * biasWeight
 
-      // Activate sum
-      sigmoid(sum)
+      // Activate 'sum'
+      output = sigmoid(sum)
 
       // Add error to SSE
       sumSquareError += Math.pow(desiredValue - output, 2)
+
+      //return calculated output
+      output
     }
   }
 }
